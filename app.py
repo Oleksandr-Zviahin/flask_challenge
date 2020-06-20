@@ -1,7 +1,7 @@
 """Main Flask application entrypoint
 
 Example::
-    $ python att.py
+    $ python app.py
 
 """
 import config
