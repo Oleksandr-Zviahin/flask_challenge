@@ -18,6 +18,7 @@ def make_shell_context():
     from src.models.service_codes import Plan, ServiceCode
     from src.models.subscriptions import Subscription
     from src.models.usages import DataUsage
+    from src.models.versions import Versions
 
     return {
         "BillingCycle": BillingCycle,
@@ -26,4 +27,5 @@ def make_shell_context():
         "ServiceCode": ServiceCode,
         "Subscription": Subscription,
         "DataUsage": DataUsage,
+        "Versions": Versions,
     }
