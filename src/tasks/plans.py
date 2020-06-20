@@ -1,6 +1,5 @@
 """Plan related tasks"""
 from celery.utils.log import get_task_logger
-from flask import current_app
 
 from src.celery_app import celery
 

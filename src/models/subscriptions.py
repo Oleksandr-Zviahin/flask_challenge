@@ -1,11 +1,10 @@
 """Subscription related models and database functionality"""
-from datetime import datetime
 from enum import Enum
 
 from sqlalchemy.dialects.postgresql import ENUM
 
 from src.models.base import db
-from src.models.service_codes import ServiceCode, subscriptions_service_codes
+from src.models.service_codes import subscriptions_service_codes
 from src.models.usages import DataUsage
 
 
