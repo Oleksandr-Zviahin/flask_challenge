@@ -2,7 +2,7 @@ from src.models.base import db
 
 
 class Versions(db.Model):
-    """Model to represent versioning table for subscriptions"""
+    """Model to represent versions table for subscriptions"""
     __tablename__ = "versions"
 
     id = db.Column(db.Integer, primary_key=True)
