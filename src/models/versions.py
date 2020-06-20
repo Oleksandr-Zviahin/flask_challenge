@@ -17,3 +17,11 @@ class Versions(db.Model):
         "Subscription", foreign_keys=[subscription_id], lazy="select", back_populates="versions"
     )
     plan = db.relationship("Plan", foreign_keys=[plan_id], lazy="select")
+
+    def __repr__(self):
+        return (
+            f"<{self.__class__.__name__}: {self.id}, "
+            f"effective_date_start: {self.effective_date_start}, effective_date_end: {self.effective_date_end}>, "
+            f"<subscription: {self.subscription_id}>, "
+            f"<plan: {self.plan_id}>"
+        )
