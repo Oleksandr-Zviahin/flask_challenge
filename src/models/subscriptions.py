@@ -37,6 +37,10 @@ class Subscription(db.Model):
     )
 
     data_usages = db.relationship(DataUsage, back_populates="subscription")
+    versions = db.relationship(
+        "Versions",
+        back_populates="subscription",
+    )
 
     def __repr__(self):  # pragma: no cover
         return (

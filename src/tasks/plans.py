@@ -18,9 +18,15 @@ def get_actual_versions_as_list(subscription_id, versions_query):
     :param versions_query: base_query to get actual versions
     :return: List of actual Versions
     """
-    versions = versions_query.filter_by({"subscription_id": subscription_id}).all()
-
-    return versions or []
+    versions = versions_query.filter_by(subscription_id=subscription_id).all()
+    # QUESTION: From the task I don't understand what is plan size,
+    # is it plan_id or plan.mb_available or some another column,
+    # so I decide to use mb_available, because it's closest solution to be true
+    return [(
+        version.plan.mb_available,
+        version.effective_date_start,
+        version.effective_date_end
+    ) for version in versions] or []
 
 
 def get_actual_versions_as_dict(versions_query):
@@ -34,9 +40,9 @@ def get_actual_versions_as_dict(versions_query):
 
     result = {}
     for version in versions:
-        if version.plan_id not in result:
-            result[version.plan_id] = []
-        result[version.plan_id].append(version.subscription_id)
+        if version.plan.mb_available not in result:
+            result[version.plan.mb_available] = []
+        result[version.plan.mb_available].append(version.subscription_id)
 
     return result
 
@@ -46,6 +52,8 @@ def query_subscription_plans(billing_cycle_id: int, subscription_id: int = None)
     """This function takes ids of BillingCycle and Subscription"""
 
     billing_cycle = get_object_or_404(BillingCycle, billing_cycle_id)
+    if not billing_cycle:
+        raise Exception("There is no billing cycle with id: {}".format(billing_cycle_id))
     base_versions_query = db.session.query(Versions).filter(
         not_(or_(Versions.effective_date_start >= billing_cycle.end_date,
                  Versions.effective_date_end <= billing_cycle.start_date))

@@ -2,7 +2,8 @@
 from celery import Celery
 from celery.utils.log import get_task_logger
 
-celery = Celery("app")
+from app import app
+
 
 logger = get_task_logger(__name__)
 
@@ -17,6 +18,7 @@ def configure_celery(app):
         object: configured celery app object
 
     """
+    celery = Celery("app", include=['src.tasks.plans'])
     celery.conf.update(app.config)
 
     # subclass task base for app context
@@ -36,3 +38,6 @@ def configure_celery(app):
     celery.finalize()
 
     return celery
+
+
+celery = configure_celery(app)
