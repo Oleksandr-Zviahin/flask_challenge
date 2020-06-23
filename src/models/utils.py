@@ -20,4 +20,4 @@ def get_object_or_404(model, mid):
     try:
         return model.query.get(mid)
     except SQLAlchemyError as err:
-        abort(404)
+        abort(err)
